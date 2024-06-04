@@ -1,5 +1,5 @@
 import os
-#from pathlib import Path
+from pathlib import Path
 import logging
 
 logging.basicConfig(level=logging.INFO, format='[%(asctime)s]: %(message)s:')
@@ -19,4 +19,23 @@ list_of_files = [
 ]
 
 for filepath in list_of_files:
-    print(filepath)
+    # Below line is used based on operating system taking the format
+    filepath=Path(filepath)
+    filedir,filename=os.path.split(filepath)
+    #print(filename)
+
+# creating the directorys
+    if filedir!="":
+         os.makedirs(filedir,exist_ok=True)
+         logging.info(f"creating directory {filedir} for this files {filename}")
+
+    # creating the files
+    if(not os.path.exists(filepath)) or (os.path.getsize(filepath)==0):
+            with open(filepath,"w") as f:
+                logging.info(f"creating empty files: {filepath}")
+
+    else:
+            logging.info(f"{filename} already exist")
+
+
+    
